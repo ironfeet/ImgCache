@@ -1,22 +1,22 @@
 === ImgCache === 
-Contributors: Iron_Feet
-Donate link: http://www.iron-feet.com/ 
+Contributors: Jie Wang
+Donate link: https://ironfeet.me/ 
 Tags: cache, image, ImgCache 
 Requires at least: 2.6
-Tested up to: 2.9
-Stable tag: 0.1.1
+Tested up to: 6.0
+Stable tag: 0.1.2
  
-Cache the imgs from other domains.
+Cache the images from other domains.
 为其他站点下的图片作缓存。
  
 == Description == 
  
-Some webmasters want to show the counter of feedburner subscribers, but feedburner.com is forbidden in some countries such as China.
+Some webmasters want to show the counter of Feedburner subscribers, but feedburner.com is forbidden in some countries such as China.
 So we should cache some images via our servers. 
 
 This plugin can help you cache the images easily
 
-一些站长希望让浏览者看着自己站点的Feedburner订阅量、Twitter的Follow数量等等，Feedburner和twittercounter之类的站点刚好又提供这类统计的图片。您可以在 http://www.iron-feet.com 侧边栏看到相应的图片。
+一些站长希望让浏览者看着自己站点的Feedburner订阅量、Twitter的Follow数量等等，Feedburner和twittercounter之类的站点刚好又提供这类统计的图片。您可以在 https://ironfeet.me 侧边栏看到相应的图片。
 但是有些地区的网络对部分站点进行了限制，比如在中国对Feedburner和twittercounter都无法访问的。
 
 如果我们用的是国外的服务器的话，我们可以利用服务器将这些图片进行缓存，然后展示给浏览者，因此这个插件便应运而生。
@@ -48,15 +48,15 @@ For example,
 
 Warning:
 
-1. The imgs will not be recache in one hour, if their cached imgs exist.
+1. The images will not be cached within one hour if their cached images exist.
 
-2. The imgs in own sites will not be cached.
+2. The images under the same domain will not be cached.
 
-3. If the imgs cann't be cache by this plugin (such as 404, 403), the original url of the imgs will be used.
+3. If the images can't be cached by this plugin (such as 404, 403), the sources of the image tag remain.
 
 Known issues:
 
-1. imgs via https are not supported.(It will be solved in next version)
+1. HTTPS sources are not supported. (It will be solved in the next major release)
 
 安装：
 
