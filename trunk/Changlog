@@ -1,5 +1,8 @@
-= 0.1.1
-* remove redundancy warning
+= 0.1.2 =
+* Fixed the URL extraction error, if there is no space between src and >
+
+= 0.1.1 =
+* Removed redundancy warning
 
 = 0.1 =
-* initial release 
+* Initial release 

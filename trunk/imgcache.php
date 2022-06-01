@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: ImgCache
-Plugin URI: http://www.iron-feet.com/it/wordpress-plugin-imgcache/
+Plugin URI: https://ironfeet.me/
 Description: Cache the imgs from other domains.
-Author: Iron_Feet
-Version: 0.1.1
-Author URI: http://www.iron-feet.com/
+Author: Jie Wang
+Version: 0.1.2
+Author URI: https://ironfeet.me/
  */
 
 error_reporting(E_ALL^E_NOTICE^E_WARNING);
@@ -92,16 +92,16 @@ function inline_imgcachelink($content='')
     {
         foreach( $imgs[0] as $img )
         {
-            $imgnew=$img;
+            $imgnew=str_replace(">"," >",$img);
 
             $pattern_src='/(?<=src)\s*\=[\s"\']*\S*(?=[\s]*)/i';
-            if( preg_match_all($pattern_src, $img, $src)!=0 )
+            if( preg_match_all($pattern_src, $imgnew, $src)!=0 )
             {
                 $srcurl=trim(substr(trim($src[0][0]),1));
                 $srcurl=getURL($srcurl);
                 
                 //if(preg_match_all('/^https{0,1}:\/\//i',$srcurl, $nouse)!=0)
-		if(preg_match_all('/^http:\/\//i',$srcurl, $nouse)!=0)
+		        if(preg_match_all('/^http:\/\//i',$srcurl, $nouse)!=0)
                 {
                     //if( preg_match_all('/^https{0,1}:\/\/'.$hostname.'/i', $srcurl, $nouse)!=0 )
                     if( preg_match_all('/^http:\/\/'.$hostname.'/i', $srcurl, $nouse)!=0 )
