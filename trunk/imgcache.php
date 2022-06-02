@@ -48,6 +48,8 @@ function cacheimg($picURL)
                 {
                     $imgtype=trim(substr($imgtype,0,strpos($imgtype,';')));
                 }
+				$imgtype = $imgtype == 'svg+xml'? 'svg' : $imgtype;
+				
                 $picDIR=IMGCACHEDIR.md5($picURL).'.'.$imgtype;
                 $picURLnew=IMGCACHEURL.md5($picURL).'.'.$imgtype;
 
@@ -100,11 +102,11 @@ function inline_imgcachelink($content='')
                 $srcurl=trim(substr(trim($src[0][0]),1));
                 $srcurl=getURL($srcurl);
                 
-                //if(preg_match_all('/^https{0,1}:\/\//i',$srcurl, $nouse)!=0)
-		        if(preg_match_all('/^http:\/\//i',$srcurl, $nouse)!=0)
+                if(preg_match_all('/^https{0,1}:\/\//i',$srcurl, $nouse)!=0)
+		        //if(preg_match_all('/^http:\/\//i',$srcurl, $nouse)!=0)
                 {
-                    //if( preg_match_all('/^https{0,1}:\/\/'.$hostname.'/i', $srcurl, $nouse)!=0 )
-                    if( preg_match_all('/^http:\/\/'.$hostname.'/i', $srcurl, $nouse)!=0 )
+                    if( preg_match_all('/^https{0,1}:\/\/'.$hostname.'/i', $srcurl, $nouse)!=0 )
+                    //if( preg_match_all('/^http:\/\/'.$hostname.'/i', $srcurl, $nouse)!=0 )
                     {
                         continue;
                     }
