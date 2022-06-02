@@ -92,7 +92,7 @@ function inline_imgcachelink($content='')
     {
         foreach( $imgs[0] as $img )
         {
-            $imgnew=str_replace(">"," >",$img);
+            $imgnew=str_replace(">"," >",str_replace("/>"," />",$img));
 
             $pattern_src='/(?<=src)\s*\=[\s"\']*\S*(?=[\s]*)/i';
             if( preg_match_all($pattern_src, $imgnew, $src)!=0 )
