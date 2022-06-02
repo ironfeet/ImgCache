@@ -4,7 +4,7 @@ Plugin Name: ImgCache
 Plugin URI: https://ironfeet.me/
 Description: Cache the imgs from other domains.
 Author: Jie Wang
-Version: 0.1.2
+Version: 0.2.1
 Author URI: https://ironfeet.me/
  */
 
