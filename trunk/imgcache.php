@@ -12,18 +12,18 @@ error_reporting(E_ALL^E_NOTICE^E_WARNING);
 
 // Pre-2.6 compatibility
 if( !defined('WP_CONTENT_URL') )
-    define( 'WP_CONTENT_URL', get_option('siteurl') . '/wp-content');
+    define('WP_CONTENT_URL', get_option('siteurl') . '/wp-content');
 if( !defined('WP_CONTENT_DIR') )
-    define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
+    define('WP_CONTENT_DIR', ABSPATH . 'wp-content');
 
-define( 'IMGCACHEDIR', WP_CONTENT_DIR.'/imgcache/' );
-define( 'IMGCACHEURL', WP_CONTENT_URL.'/imgcache/' );
+define('IMGCACHEDIR', WP_CONTENT_DIR.'/imgcache/');
+define('IMGCACHEURL', WP_CONTENT_URL.'/imgcache/');
 
 require_once('Snoopy.class.php');
 
 function checkdir()
 {
-    if(is_dir(IMGCACHEDIR)===FALSE)
+    if(is_dir(IMGCACHEDIR) === FALSE)
     {
         mkdir(IMGCACHEDIR);
     }
@@ -41,26 +41,26 @@ function cacheimg($picURL)
         $imgtype="";
         foreach($snoopy->headers as $val)
         {
-            if(strpos($val,'Content-Type')!==FALSE && strpos($val,'image')!==FALSE )
+            if(strpos($val,'Content-Type') !== FALSE && strpos($val,'image') !== FALSE)
             {
-                $imgtype=trim(substr($val,strpos($val,'image')+6));
-                if(strpos($imgtype,';')!==FALSE)
+                $imgtype = trim(substr($val, strpos($val, 'image') + 6));
+                if(strpos($imgtype, ';') !== FALSE)
                 {
-                    $imgtype=trim(substr($imgtype,0,strpos($imgtype,';')));
+                    $imgtype = trim(substr($imgtype, 0, strpos($imgtype, ';')));
                 }
 				$imgtype = $imgtype == 'svg+xml'? 'svg' : $imgtype;
 				
-                $picDIR=IMGCACHEDIR.md5($picURL).'.'.$imgtype;
-                $picURLnew=IMGCACHEURL.md5($picURL).'.'.$imgtype;
+                $picDIR = IMGCACHEDIR.md5($picURL) . '.' . $imgtype;
+                $picURLnew = IMGCACHEURL.md5($picURL) . '.' . $imgtype;
 
-                if(file_exists($picDIR) && date('U')-filemtime($picDIR)<=3600 )
+                if(file_exists($picDIR) && date('U') - filemtime($picDIR) <= 3600)
                 {
                     break;
                 }
                     
-                $handle = fopen($picDIR,'w') ;
-                fwrite($handle, $snoopy->results) ; 
-                fclose($handle) ;
+                $handle = fopen($picDIR, 'w');
+                fwrite($handle, $snoopy->results); 
+                fclose($handle);
                 break;
             }
         }
@@ -70,51 +70,51 @@ function cacheimg($picURL)
 
 function getURL($preURL)
 {
-    if(strpos($preURL,'\'')===0 || strpos($preURL,'"')===0)
+    if(strpos($preURL,'\'') === 0 || strpos($preURL, '"') === 0)
     {
-        $preURL=substr($preURL,1);
+        $preURL = substr($preURL, 1);
     }
 
-    if(strrpos($preURL,'\'')===strlen($preURL)-1 || strrpos($preURL,'"')===strlen($preURL)-1)
+    if(strrpos($preURL, '\'') === strlen($preURL) - 1 || strrpos($preURL, '"') === strlen($preURL) - 1)
     {
-        $preURL=substr($preURL,0,strlen($preURL)-1);
+        $preURL = substr($preURL, 0, strlen($preURL) - 1);
     }
     return trim($preURL);
 }
 
 // inline_imgcachelink
-function inline_imgcachelink($content='') 
+function inline_imgcachelink($content = '') 
 {
-    $hostname=$_SERVER["HTTP_HOST"];
+    $hostname = $_SERVER["HTTP_HOST"];
 
-    $pattern= "/<\s*img[^<>]*imgcache4wordpress[^<>]*>/i";
-    $imgcount=preg_match_all($pattern,$content,$imgs);
+    $pattern = "/<\s*img[^<>]*imgcache4wordpress[^<>]*>/i";
+    $imgcount = preg_match_all($pattern, $content, $imgs);
 
-    if( $imgcount!=0 ) 
+    if($imgcount != 0) 
     {
-        foreach( $imgs[0] as $img )
+        foreach($imgs[0] as $img)
         {
-            $imgnew=str_replace(">"," >",str_replace("/>"," />",$img));
+            $imgnew = str_replace(">", " >", str_replace("/>", " />", $img));
 
-            $pattern_src='/(?<=src)\s*\=[\s"\']*\S*(?=[\s]*)/i';
-            if( preg_match_all($pattern_src, $imgnew, $src)!=0 )
+            $pattern_src = '/(?<=src)\s*\=[\s"\']*\S*(?=[\s]*)/i';
+            if(preg_match_all($pattern_src, $imgnew, $src)!=0)
             {
-                $srcurl=trim(substr(trim($src[0][0]),1));
+                $srcurl=trim(substr(trim($src[0][0]), 1));
                 $srcurl=getURL($srcurl);
                 
-                if(preg_match_all('/^https{0,1}:\/\//i',$srcurl, $nouse)!=0)
+                if(preg_match_all('/^https{0,1}:\/\//i', $srcurl, $nouse)!=0)
 		        //if(preg_match_all('/^http:\/\//i',$srcurl, $nouse)!=0)
                 {
-                    if( preg_match_all('/^https{0,1}:\/\/'.$hostname.'/i', $srcurl, $nouse)!=0 )
+                    if(preg_match_all('/^https{0,1}:\/\/' . $hostname . '/i', $srcurl, $nouse) != 0)
                     //if( preg_match_all('/^http:\/\/'.$hostname.'/i', $srcurl, $nouse)!=0 )
                     {
                         continue;
                     }
 
-                    $srcurlnew=cacheimg($srcurl);
+                    $srcurlnew = cacheimg($srcurl);
                     
-                    $imgnew=str_replace($srcurl,$srcurlnew,$imgnew);
-                    $content=str_replace($img,$imgnew,$content);
+                    $imgnew = str_replace($srcurl, $srcurlnew, $imgnew);
+                    $content = str_replace($img, $imgnew, $content);
                 }
             }
         }
